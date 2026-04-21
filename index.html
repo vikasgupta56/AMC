@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RSSP – AMC Plans</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --vyu: #70377e;
+    --vyu-light: #f3ecf6;
+    --vyu-mid: #9b5aab;
+    --gold: #b8832a;
+    --gold-light: #fdf5e6;
+    --gold-mid: #e0a83a;
+    --gold-shine: #f5c842;
+    --white: #ffffff;
+    --off: #fafaf9;
+    --ink: #1a1a1a;
+    --muted: #6b6b6b;
+    --border: #e8e3ec;
+    --radius: 16px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 60px 20px 80px;
+  }
+
+  /* ── header ─────────────────────────────────── */
+  .page-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .brand-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--vyu);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+
+  .brand-pill::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.6);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 5vw, 46px);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* ── grid ────────────────────────────────────── */
+  .plans-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 860px;
+    margin: 0 auto 40px;
+  }
+
+  @media (max-width: 680px) {
+    .plans-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── card ────────────────────────────────────── */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card.gold {
+    border: 2px solid var(--gold-mid);
+    box-shadow: 0 8px 40px rgba(184,131,42,0.12);
+  }
+
+  /* card header */
+  .card-head {
+    padding: 28px 28px 24px;
+    position: relative;
+  }
+
+  .card.standard .card-head {
+    background: var(--vyu);
+  }
+
+  .card.gold .card-head {
+    background: linear-gradient(135deg, #7a4d10 0%, #c9872a 40%, #e8b84b 70%, #c9872a 100%);
+  }
+
+  .plan-tag {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .card.standard .plan-tag {
+    background: rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.9);
+  }
+
+  .card.gold .plan-tag {
+    background: rgba(255,255,255,0.25);
+    color: #3b1e00;
+  }
+
+  .plan-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .card.standard .plan-name { color: #fff; }
+  .card.gold .plan-name { color: #2a1200; }
+
+  .plan-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .price-label {
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .card.standard .price-label { color: rgba(255,255,255,0.7); }
+  .card.gold .price-label { color: rgba(42,18,0,0.65); }
+
+  .price-value {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .card.standard .price-value { color: #fff; }
+  .card.gold .price-value { color: #2a1200; }
+
+  .price-cycle {
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .card.standard .price-cycle { color: rgba(255,255,255,0.65); }
+  .card.gold .price-cycle { color: rgba(42,18,0,0.55); }
+
+  /* card body */
+  .card-body {
+    padding: 24px 28px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .section-title {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .card.standard .section-title { color: var(--vyu); }
+  .card.gold .section-title { color: var(--gold); }
+
+  .item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13.5px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .item-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .card.standard .item-dot { background: var(--vyu-light); }
+  .card.gold .item-dot { background: #fdf0d5; }
+
+  .item-dot::after {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+  }
+
+  .card.standard .item-dot::after { background: var(--vyu); }
+  .card.gold .item-dot::after { background: var(--gold); }
+
+  .item-text { flex: 1; }
+
+  .item-text strong {
+    font-weight: 500;
+  }
+
+  .client-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+    background: #f0e8f5;
+    color: #70377e;
+  }
+
+  .card.gold .client-badge {
+    background: #fdf0d5;
+    color: var(--gold);
+  }
+
+  /* ── note ────────────────────────────────────── */
+  .note-box {
+    max-width: 860px;
+    margin: 0 auto;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 24px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .note-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--vyu-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .note-icon svg { width: 14px; height: 14px; }
+
+  .note-content {}
+
+  .note-heading {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--vyu);
+    margin-bottom: 6px;
+  }
+
+  .note-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .note-list li {
+    font-size: 12.5px;
+    color: var(--muted);
+    padding-left: 12px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .note-list li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--vyu);
+    font-weight: 300;
+  }
+
+  /* footer */
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 12px;
+    color: #bbb;
+    letter-spacing: 0.04em;
+  }
+
+  .footer span {
+    color: var(--vyu);
+    font-weight: 500;
+  }
+
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <!-- <div class="brand-pill">RSSP</div> -->
+  <h1>AMC Plans - RSSP</h1>
+  <p class="subtitle">Annual Maintenance Contract &nbsp;·&nbsp; Offered by The Vyu</p>
+</header>
+
+<div class="plans-grid">
+
+  <!-- Standard AMC -->
+  <div class="card standard">
+    <div class="card-head">
+      <div class="plan-tag">Standard</div>
+      <div class="plan-name">Standard AMC</div>
+      <div class="plan-price-row">
+        <span class="price-label">The Vyu charges:</span>
+        <span class="price-value">Nil</span>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <div class="section">
+        <div class="section-title">External costs &nbsp;(paid directly by client)</div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <div class="item-text">SMS services (e.g. Twilio or equivalent)<span class="client-badge">client</span></div>
+        </div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <div class="item-text">AWS hosting &amp; domain charges — <strong>approx. ₹4,000–5,000/month</strong><span class="client-badge">client</span></div>
+        </div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <div class="item-text">Email services (e.g. EmailJS or equivalent)<span class="client-badge">client</span></div>
+        </div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <div class="item-text">Real-time notification services<span class="client-badge">client</span></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Included – The Vyu services</div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <div class="item-text">Manual text &amp; image updates — <strong>up to 8 hrs/month</strong>, max 5 requests</div>
+        </div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <div class="item-text">Database updates — <strong>up to 20/month</strong></div>
+        </div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <div class="item-text">Support initiation — within <strong>5–7 days</strong></div>
+        </div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <div class="item-text">Website downtime response — within <strong>48 hours</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Gold AMC -->
+  <div class="card gold">
+    <div class="card-head">
+      <div class="plan-tag">★ Gold</div>
+      <div class="plan-name">Gold AMC</div>
+      <div class="plan-price-row">
+        <span class="price-label">The Vyu charges:</span>
+        <span class="price-value">₹6,000</span>
+        <span class="price-cycle">/month</span>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <div class="section">
+        <div class="section-title">Covered in plan</div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <div class="item-text">AWS hosting &amp; domain charges — <strong>up to ₹4,500/month</strong> covered</div>
+        </div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <div class="item-text">Email, SMS &amp; real-time notification services — <strong>up to ₹1,500/month</strong> covered</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Included – The Vyu services</div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <div class="item-text">Manual text &amp; image updates — <strong>unlimited</strong> (up to 5 full working days/month)</div>
+        </div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <div class="item-text">Database updates — <strong>up to 50/month</strong></div>
+        </div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <div class="item-text">Priority support — <strong>same-day or next-day</strong> initiation</div>
+        </div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <div class="item-text">Website downtime response — <strong>same-day</strong> resolution priority</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Note -->
+<div class="note-box">
+  <div class="note-icon">
+    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="8" cy="8" r="7" stroke="#70377e" stroke-width="1.4"/>
+      <path d="M8 7v4" stroke="#70377e" stroke-width="1.4" stroke-linecap="round"/>
+      <circle cx="8" cy="5" r="0.8" fill="#70377e"/>
+    </svg>
+  </div>
+  <div class="note-content">
+    <div class="note-heading">Important Note</div>
+    <ul class="note-list">
+      <li>One-time costs (e.g. payment gateway setup, third-party integrations) are not included in the AMC.</li>
+      <li>Any major enhancements or new sections will be quoted and billed separately.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">Prepared by <span>The Vyu</span> &nbsp;·&nbsp; RSSP AMC Plans</div>
+
+</body>
+</html>
